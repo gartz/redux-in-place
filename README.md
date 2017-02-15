@@ -87,6 +87,10 @@ export default connectReducer(bookReducer)(ConnectedBook);
 ```
 That's it, simple like that, now all your reducer properties will be on 'Book'.
 
+## Thanks
+
+**[@AntonioSchmidt](https://github.com/AntonioSchmidt)** - For all the help with this lib, the effort to make it open-source, document and help me with it testing and development. My sincere thank you!
+
 ## License
 Copyright (c) 2016 Gabriel Reitz Giannattasio
 Licensed under the [MIT license](LICENSE-MIT).
