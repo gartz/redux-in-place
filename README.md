@@ -43,7 +43,7 @@ It becomes easier to read and to organize store's properties.
 First of all
 
 ```javascript
-npm install redux-in-place
+npm install redux-in-place --save
 ```
 
 Then you user your redux like you normally would but instead of exporting it, you should connect
@@ -74,7 +74,9 @@ Then in your React component:
 
 ```javascript
 import { connectReducer } from 'redux-in-place';
-import bookReducer from 'bookReducer';
+import { connect } from 'react-redux';
+
+import bookReducer from './bookReducer';
 //...code ommited for sake of simplicity
 const ConnectedBook = connect(
   ({ Book }) => ({
