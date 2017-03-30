@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=6.9.1"
   },
+  "main": "babel.index.js",
   "dependencies": {
     "react": "^15.4.1",
     "lodash": "^4.17.2",
@@ -44,8 +45,7 @@
       "stage-2"
     ],
     "plugins": [
-      "transform-runtime",
-      "react-hot-loader/babel"
+      "transform-runtime"
     ],
     "env": {
       "production": {
@@ -64,7 +64,6 @@
               "modules": false
             }
           ],
-          "react-hot-loader/babel",
           [
             "transform-object-rest-spread",
             {
@@ -91,5 +90,5 @@
       }
     }
   }
-
 }
+
