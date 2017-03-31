@@ -152,7 +152,20 @@ function connectReducer(reducer) {
     reducersList.forEach(function (listReducer) {
       result = (0, _extends3.default)({}, listReducer(result, action));
     });
-    return (0, _extends3.default)({}, cachedReducer(cachedState, action), result);
+    var cachedReducerResult = cachedReducer(cachedState, action);
+    var nextState = {};
+    (0, _lodash.keys)(cachedReducerResult).forEach(function (key) {
+      if (state[key] !== cachedReducerResult[key]) {
+        nextState[key] = cachedReducerResult[key];
+      }
+    });
+    (0, _lodash.keys)(result).forEach(function (key) {
+      if (state[key] !== result[key]) {
+        nextState[key] = result[key];
+      }
+    });
+
+    return nextState;
   };
 
   return function wrapWithConnectReducers(WrappedComponent) {

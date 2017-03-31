@@ -106,9 +106,22 @@ export function connectReducer(reducer) {
     reducersList.forEach((listReducer) => {
       result = {
         ...listReducer(result, action)
-    };
-  });
-    return { ...cachedReducer(cachedState, action), ...result };
+      };
+    });
+    const cachedReducerResult = cachedReducer(cachedState, action);
+    const nextState = {};
+    keys(cachedReducerResult).forEach(key => {
+      if (state[key] !== cachedReducerResult[key]) {
+        nextState[key] = cachedReducerResult[key];
+      }
+    });
+    keys(result).forEach(key => {
+      if (state[key] !== result[key]) {
+        nextState[key] = result[key];
+      }
+    });
+
+    return nextState;
   };
 
   return function wrapWithConnectReducers(WrappedComponent) {
