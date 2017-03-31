@@ -109,7 +109,7 @@ export function connectReducer(reducer) {
       };
     });
     const cachedReducerResult = cachedReducer(cachedState, action);
-    const nextState = {};
+    const nextState = { ...state };
     keys(cachedReducerResult).forEach(key => {
       if (state[key] !== cachedReducerResult[key]) {
         nextState[key] = cachedReducerResult[key];
