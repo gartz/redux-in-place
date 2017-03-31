@@ -153,7 +153,7 @@ function connectReducer(reducer) {
       result = (0, _extends3.default)({}, listReducer(result, action));
     });
     var cachedReducerResult = cachedReducer(cachedState, action);
-    var nextState = {};
+    var nextState = (0, _extends3.default)({}, state);
     (0, _lodash.keys)(cachedReducerResult).forEach(function (key) {
       if (state[key] !== cachedReducerResult[key]) {
         nextState[key] = cachedReducerResult[key];
