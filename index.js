@@ -84,7 +84,7 @@ export function connectReducerMiddleware(reducer) {
     return reducer(state, action);
   }
 
-  cachedReducer = reducer;
+  cachedReducer = reducer || (state => state);
   return connectReducerAction;
 }
 
@@ -120,8 +120,11 @@ export function connectReducer(reducer) {
         nextState[key] = result[key];
       }
     });
+    
+    const isEveryPropEqualsCurrentState = every(keys(nextState), (key) => (nextState[key] === state[key]));
 
-    return every(keys(nextState), (key) => (nextState[key] === state[key])) ? state : nextState;
+    return isEveryPropEqualsCurrentState ? state : nextState
+    ;
   };
 
   return function wrapWithConnectReducers(WrappedComponent) {
@@ -150,6 +153,7 @@ export function connectReducer(reducer) {
       }
 
       componentWillMount() {
+        if (!__DEV__) return;
         const { dispatch, replaceReducer } = this.store;
 
         if (nextReducer !== this.nextReducer) {
