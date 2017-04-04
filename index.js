@@ -1,6 +1,6 @@
 import { Component, createElement, PropTypes } from 'react';
 import invariant from 'invariant';
-import { isEqual, get, pick, keys } from 'lodash';
+import { get, pick, keys, every } from 'lodash';
 
 import hoistStatics from 'hoist-non-react-statics';
 
@@ -71,7 +71,7 @@ export function placeReducer(path, reducer) {
   return (state = initialState, action) => {
     const currentState = get(state, path);
     const reducerState = reducer(currentState, action);
-    const hasNotChanged = isEqual(currentState, reducerState);
+    const hasNotChanged = currentState === reducerState;
     return hasNotChanged ? state : change(state, reducerState);
   };
 }
@@ -121,7 +121,7 @@ export function connectReducer(reducer) {
       }
     });
 
-    return nextState;
+    return every(keys(nextState), (key) => (nextState[key] === state[key])) ? state : nextState;
   };
 
   return function wrapWithConnectReducers(WrappedComponent) {
@@ -143,7 +143,7 @@ export function connectReducer(reducer) {
         const { replaceReducer, getState } = this.store;
 
         cachedInitialState = cachedReducer(undefined, {});
-        if (!hasInitialized && !isEqual(getState(), nextReducer(getState(), {}))) {
+        if (!hasInitialized && getState() !== nextReducer(getState(), {})) {
           replaceReducer(nextReducer);
           hasInitialized = true;
         }
@@ -182,3 +182,5 @@ export function connectReducer(reducer) {
     return hoistStatics(ConnectReducer, WrappedComponent);
   };
 }
+
+export default connectReducer;

@@ -114,7 +114,7 @@ function placeReducer(path, reducer) {
 
     var currentState = (0, _lodash.get)(state, path);
     var reducerState = reducer(currentState, action);
-    var hasNotChanged = (0, _lodash.isEqual)(currentState, reducerState);
+    var hasNotChanged = currentState === reducerState;
     return hasNotChanged ? state : change(state, reducerState);
   };
 }
@@ -165,7 +165,9 @@ function connectReducer(reducer) {
       }
     });
 
-    return nextState;
+    return (0, _lodash.every)((0, _lodash.keys)(nextState), function (key) {
+      return nextState[key] === state[key];
+    }) ? state : nextState;
   };
 
   return function wrapWithConnectReducers(WrappedComponent) {
@@ -189,7 +191,7 @@ function connectReducer(reducer) {
 
 
         cachedInitialState = cachedReducer(undefined, {});
-        if (!hasInitialized && !(0, _lodash.isEqual)(getState(), nextReducer(getState(), {}))) {
+        if (!hasInitialized && getState() !== nextReducer(getState(), {})) {
           replaceReducer(nextReducer);
           hasInitialized = true;
         }
@@ -234,4 +236,6 @@ function connectReducer(reducer) {
     return (0, _hoistNonReactStatics2.default)(ConnectReducer, WrappedComponent);
   };
 }
+
+exports.default = connectReducer;
 
