@@ -203,7 +203,6 @@ function connectReducer(reducer) {
       }
 
       ConnectReducer.prototype.componentWillMount = function componentWillMount() {
-        if (!__DEV__) return;
         var _store = this.store,
             dispatch = _store.dispatch,
             replaceReducer = _store.replaceReducer;

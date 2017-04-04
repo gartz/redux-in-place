@@ -153,7 +153,6 @@ export function connectReducer(reducer) {
       }
 
       componentWillMount() {
-        if (!__DEV__) return;
         const { dispatch, replaceReducer } = this.store;
 
         if (nextReducer !== this.nextReducer) {
