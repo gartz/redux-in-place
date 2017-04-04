@@ -130,7 +130,9 @@ function connectReducerMiddleware(reducer) {
     return reducer(state, action);
   }
 
-  cachedReducer = reducer;
+  cachedReducer = reducer || function (state) {
+    return state;
+  };
   return connectReducerAction;
 }
 
@@ -165,9 +167,11 @@ function connectReducer(reducer) {
       }
     });
 
-    return (0, _lodash.every)((0, _lodash.keys)(nextState), function (key) {
+    var isEveryPropEqualsCurrentState = (0, _lodash.every)((0, _lodash.keys)(nextState), function (key) {
       return nextState[key] === state[key];
-    }) ? state : nextState;
+    });
+
+    return isEveryPropEqualsCurrentState ? state : nextState;
   };
 
   return function wrapWithConnectReducers(WrappedComponent) {
@@ -199,6 +203,7 @@ function connectReducer(reducer) {
       }
 
       ConnectReducer.prototype.componentWillMount = function componentWillMount() {
+        if (!__DEV__) return;
         var _store = this.store,
             dispatch = _store.dispatch,
             replaceReducer = _store.replaceReducer;

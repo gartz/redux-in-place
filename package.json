@@ -1,6 +1,6 @@
 {
   "name": "redux-in-place",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Gabriel Reitz Giannattasio <gabriel@gartz.com.br> (http://gartz.com.br)",
   "engines": {
     "node": ">=6.9.1"
